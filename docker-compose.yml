@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  fairride-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - SENDGRID_API_KEY=${SENDGRID_API_KEY}
+      - SECRET_KEY=${SECRET_KEY}
+    env_file:
+      - .env
+    volumes:
+      - ./app:/app/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Note: Supabase and SendGrid are external services
+  # You would need to set up accounts with these services separately
